@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #001a1a;
+  --bg-elevated: #002b2b;
+  --card: #0a3535;
+  --card-hover: #0f4040;
+  --border: #1a4a4a;
+  --accent: #7bbca9;
+  --accent-hover: #a3d9c9;
+  --accent-muted: rgba(123, 188, 169, 0.18);
+  --text: #f0fdf4;
+  --text-muted: #94a3b8;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --radius: 1rem;
+  --radius-lg: 1.25rem;
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
+  --color-lunea-bg: var(--bg);
+  --color-lunea-elevated: var(--bg-elevated);
+  --color-lunea-card: var(--card);
+  --color-lunea-border: var(--border);
+  --color-lunea-accent: var(--accent);
+  --color-lunea-muted: var(--text-muted);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-outfit);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-outfit), system-ui, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: #001a1a;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+}
+
+.lunea-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.lunea-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: background 0.2s, transform 0.15s, opacity 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.lunea-btn:active {
+  transform: scale(0.98);
+}
+
+.lunea-btn-primary {
+  background: linear-gradient(135deg, #a3d9c9, #7bbca9);
+  color: #001a1a;
+}
+
+.lunea-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.lunea-btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.lunea-btn-ghost:hover {
+  background: var(--card);
+}
+
+.lunea-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.lunea-input:focus {
+  border-color: var(--accent);
+}
+
+.lunea-input::placeholder {
+  color: var(--text-muted);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.5s ease-out both;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.08s;
+}
+.animate-delay-2 {
+  animation-delay: 0.16s;
+}
+.animate-delay-3 {
+  animation-delay: 0.24s;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

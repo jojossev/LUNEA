@@ -1,0 +1,8 @@
+[phases.build]
+cmds = ["npm install", "prisma generate", "npm run build"]
+
+[phases.start]
+cmds = ["prisma migrate deploy", "npm start"]
+
+[variables]
+NODE_ENV = "production"

@@ -1,0 +1,176 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  email        String   @unique
+  passwordHash String
+  phone        String?
+  /// LISTENER | ARTIST | ADMIN
+  role         String   @default("LISTENER")
+  status       String   @default("Actif")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  artist  Artist?
+  reports Report[]
+}
+
+model Artist {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name               String
+  slug               String    @unique
+  city               String?
+  country            String?
+  genre              String?
+  bio                String?
+  imageUrl           String?
+  verified           Boolean   @default(false)
+  /// NORMAL | PREMIUM_ACTIVE | PREMIUM_EXPIRED
+  premiumStatus      String    @default("NORMAL")
+  premiumActivatedAt DateTime?
+  premiumExpiresAt   DateTime?
+  newcoinAccount     String?
+  flexpayAccount     String?
+  realBalance        Float     @default(0)
+  virtualRevenue     Float     @default(0)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  tracks        Track[]
+  listens       Listen[]
+  downloads     Download[]
+  withdrawals   Withdrawal[]
+  ledgerEntries LedgerEntry[]
+  payments      PremiumPayment[]
+}
+
+model Track {
+  id          String   @id @default(cuid())
+  artistId    String
+  artist      Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  title       String
+  genre       String
+  year        Int
+  duration    String   @default("0:00")
+  description String?
+  tags        String   @default("")
+  lyrics      String?
+  coverUrl    String?
+  audioUrl    String?
+  /// Taille fichier en octets
+  fileSize    Int?
+  /// Hash SHA-256 pour intégrité
+  fileHash    String?
+  /// PUBLISHED | DRAFT | HIDDEN | SUSPENDED
+  status      String   @default("PUBLISHED")
+  plays       Int      @default(0)
+  downloads   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  listens        Listen[]
+  downloadEvents Download[]
+  reports        Report[]
+}
+
+model Listen {
+  id         String   @id @default(cuid())
+  trackId    String
+  track      Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  artistId   String
+  artist     Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  listenerId String?
+  clientKey  String?
+  ipHash     String?
+  /// Secondes écoutées avant validation
+  listenedSeconds Int @default(60)
+  validated  Boolean  @default(true)
+  monetized  Boolean  @default(false)
+  amount     Float    @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([trackId, clientKey, createdAt])
+  @@index([trackId, listenerId, createdAt])
+}
+
+model Download {
+  id         String   @id @default(cuid())
+  trackId    String
+  track      Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  artistId   String
+  artist     Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  downloaderId String?
+  clientKey  String?
+  ipHash     String?
+  monetized  Boolean  @default(false)
+  amount     Float    @default(0)
+  createdAt  DateTime @default(now())
+
+  @@index([trackId, clientKey, createdAt])
+}
+
+model PremiumPayment {
+  id             String   @id @default(cuid())
+  artistId       String
+  artist         Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  amount         Float    @default(12)
+  currency       String   @default("USD")
+  method         String   @default("Newcoin")
+  newcoinAccount String?
+  flexpayAccount String?
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+}
+
+model Withdrawal {
+  id             String   @id @default(cuid())
+  artistId       String
+  artist         Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  amount         Float
+  method         String   @default("Newcoin")
+  newcoinAccount String?
+  flexpayAccount String?
+  /// PENDING | PROCESSING | PAID | REJECTED
+  status         String   @default("PENDING")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model LedgerEntry {
+  id        String   @id @default(cuid())
+  artistId  String
+  artist    Artist   @relation(fields: [artistId], references: [id], onDelete: Cascade)
+  /// VIRTUAL_LISTEN | VIRTUAL_DOWNLOAD | REAL_LISTEN | REAL_DOWNLOAD | WITHDRAWAL | PREMIUM_PAYMENT
+  kind      String
+  amount    Float
+  note      String?
+  /// Chaîne d'intégrité (hash de l'entrée précédente)
+  prevHash  String?
+  /// Hash SHA-256 de cette écriture (immuable / auditable)
+  entryHash String
+  createdAt DateTime @default(now())
+
+  @@index([artistId, createdAt])
+}
+
+model Report {
+  id         String   @id @default(cuid())
+  trackId    String
+  track      Track    @relation(fields: [trackId], references: [id], onDelete: Cascade)
+  reporterId String?
+  reporter   User?    @relation(fields: [reporterId], references: [id])
+  reason     String
+  /// PENDING | PROCESSING | RESOLVED
+  status     String   @default("PENDING")
+  createdAt  DateTime @default(now())
+}
