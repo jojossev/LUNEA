@@ -182,15 +182,15 @@ async function main() {
 
   const [lunez, malaika, kofi, sira] = createdArtists;
 
-  const tracksSeed = [
-    { artist: lunez, title: "Aimer encore", genre: "Afrobeat", year: 2025, duration: "3:42", plays: 45200, downloads: 8200, cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=400&fit=crop", tags: "amour,nuit,afro" },
-    { artist: lunez, title: "Nuit Kin", genre: "Afrobeat", year: 2025, duration: "4:05", plays: 38100, downloads: 7100, cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop", tags: "ville,kinshasa" },
-    { artist: lunez, title: "Brouillon secret", genre: "Afrobeat", year: 2026, duration: "2:40", plays: 0, downloads: 0, cover: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&h=400&fit=crop", tags: "demo", status: "DRAFT" },
-    { artist: malaika, title: "Soleil doux", genre: "Soul", year: 2024, duration: "3:18", plays: 52100, downloads: 11200, cover: "https://images.unsplash.com/photo-1459749411177-0415448067e0?w=400&h=400&fit=crop", tags: "soul,été" },
-    { artist: malaika, title: "Étoiles", genre: "Soul", year: 2025, duration: "3:55", plays: 27100, downloads: 5600, cover: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?w=400&h=400&fit=crop", tags: "nuit,rêve" },
-    { artist: kofi, title: "Drift Mode", genre: "Hip-Hop", year: 2025, duration: "2:56", plays: 98000, downloads: 22000, cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=400&h=400&fit=crop", tags: "rap,urbain" },
-    { artist: kofi, title: "Pulse", genre: "Hip-Hop", year: 2025, duration: "3:21", plays: 64000, downloads: 15000, cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=400&fit=crop", tags: "énergie" },
-    { artist: sira, title: "Lagune", genre: "Jazz", year: 2024, duration: "5:12", plays: 18900, downloads: 3400, cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop", tags: "jazz,instrumental" },
+  const tracksSeed: any[] = [
+    { artist: lunez, title: "Aimer encore", genre: "Afrobeat", year: 2025, duration: "3:42", plays: 45200, downloads: 8200, cover: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&h=400&fit=crop", tags: "amour,nuit,afro", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+    { artist: lunez, title: "Nuit Kin", genre: "Afrobeat", year: 2025, duration: "4:05", plays: 38100, downloads: 7100, cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=400&fit=crop", tags: "ville,kinshasa", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+    { artist: lunez, title: "Brouillon secret", genre: "Afrobeat", year: 2026, duration: "2:40", plays: 0, downloads: 0, cover: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=400&h=400&fit=crop", tags: "demo", status: "DRAFT", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" },
+    { artist: malaika, title: "Soleil doux", genre: "Soul", year: 2024, duration: "3:18", plays: 52100, downloads: 11200, cover: "https://images.unsplash.com/photo-1459749411177-0415448067e0?w=400&h=400&fit=crop", tags: "soul,été", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3" },
+    { artist: malaika, title: "Étoiles", genre: "Soul", year: 2025, duration: "3:55", plays: 27100, downloads: 5600, cover: "https://images.unsplash.com/photo-1516280440614-6697288d5d38?w=400&h=400&fit=crop", tags: "nuit,rêve", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3" },
+    { artist: kofi, title: "Drift Mode", genre: "Hip-Hop", year: 2025, duration: "2:56", plays: 98000, downloads: 22000, cover: "https://images.unsplash.com/photo-1571330735066-03aaa9429d89?w=400&h=400&fit=crop", tags: "rap,urbain", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3" },
+    { artist: kofi, title: "Pulse", genre: "Hip-Hop", year: 2025, duration: "3:21", plays: 64000, downloads: 15000, cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=400&h=400&fit=crop", tags: "énergie", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3" },
+    { artist: sira, title: "Lagune", genre: "Jazz", year: 2024, duration: "5:12", plays: 18900, downloads: 3400, cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=400&h=400&fit=crop", tags: "jazz,instrumental", audio: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" },
   ];
 
   const createdTracks = [];
@@ -207,7 +207,7 @@ async function main() {
         plays: t.plays,
         downloads: t.downloads,
         status: t.status ?? "PUBLISHED",
-        audioUrl: "/audio/demo.mp3",
+        audioUrl: t.audio,
       },
     });
     createdTracks.push(track);
