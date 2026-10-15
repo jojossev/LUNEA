@@ -84,6 +84,10 @@ export async function saveUpload(subdir: "audio" | "covers", filename: string, d
       })
     );
     const publicBase = process.env.S3_PUBLIC_URL || process.env.S3_ENDPOINT;
+    // If publicBase already includes bucket name, don't add it again
+    if (publicBase!.includes(bucket)) {
+      return `${publicBase!.replace(/\/$/, "")}/${key}`;
+    }
     return `${publicBase!.replace(/\/$/, "")}/${bucket}/${key}`;
   }
 
