@@ -181,32 +181,32 @@ export function GlobalPlayer() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-[var(--bg-elevated)]/95 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 md:gap-4 md:px-6">
-        <img src={track.cover} alt="" className="h-12 w-12 rounded-lg object-cover" />
-        <div className="min-w-0 flex-1 md:max-w-[200px]">
-          <p className="truncate text-sm font-semibold">{track.title}</p>
+      <div className="mx-auto flex max-w-7xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-4 sm:py-3 md:gap-4 md:px-6">
+        <img src={track.cover} alt="" className="h-10 w-10 rounded-lg object-cover sm:h-12 sm:w-12" />
+        <div className="min-w-0 flex-1 sm:max-w-[200px]">
+          <p className="truncate text-xs font-semibold sm:text-sm">{track.title}</p>
           <Link
             href={`/artiste/${track.artistId}`}
-            className="truncate text-xs text-[var(--text-muted)] hover:text-[var(--accent)]"
+            className="truncate text-[10px] text-[var(--text-muted)] hover:text-[var(--accent)] sm:text-xs"
           >
             {track.artistName}
           </Link>
         </div>
 
         <div className="flex flex-1 flex-col items-center gap-1">
-          <div className="flex items-center gap-3">
-            <button type="button" onClick={prev} className="text-[var(--text-muted)] hover:text-white" aria-label="Précédent">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <button type="button" onClick={prev} className="text-[var(--text-muted)] hover:text-white text-sm sm:text-base" aria-label="Précédent">
               ⏮
             </button>
             <button
               type="button"
               onClick={toggle}
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--bg)] font-bold"
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--bg)] font-bold sm:h-10 sm:w-10"
               aria-label={playing ? "Pause" : "Lecture"}
             >
               {playing ? "⏸" : "▶"}
             </button>
-            <button type="button" onClick={next} className="text-[var(--text-muted)] hover:text-white" aria-label="Suivant">
+            <button type="button" onClick={next} className="text-[var(--text-muted)] hover:text-white text-sm sm:text-base" aria-label="Suivant">
               ⏭
             </button>
           </div>
@@ -224,7 +224,7 @@ export function GlobalPlayer() {
           </p>
         </div>
 
-        <button type="button" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-xs md:inline-flex" onClick={download}>
+        <button type="button" className="lunea-btn lunea-btn-ghost hidden px-2 py-2 text-[10px] sm:px-3 sm:py-2 sm:text-xs md:inline-flex" onClick={download}>
           Télécharger
         </button>
       </div>

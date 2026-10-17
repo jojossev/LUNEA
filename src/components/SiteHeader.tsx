@@ -24,7 +24,7 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--border)] bg-[var(--bg)]/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-7xl items-center gap-4 px-4 py-3 md:px-6">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-3 md:gap-4 md:px-6">
         <LuneaMark />
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -64,7 +64,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2 md:ml-0">
           <Link
             href="/recherche"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] lg:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] lg:hidden sm:h-10 sm:w-10"
             aria-label="Recherche"
           >
             ⌕
@@ -73,26 +73,26 @@ export function SiteHeader() {
           {!loading && user ? (
             <>
               {user.role === "ARTIST" && (
-                <Link href="/dashboard" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-sm sm:inline-flex">
+                <Link href="/dashboard" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-xs sm:inline-flex sm:text-sm">
                   Dashboard
                 </Link>
               )}
               {user.role === "ADMIN" && (
-                <Link href="/admin" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-sm sm:inline-flex">
+                <Link href="/admin" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-xs sm:inline-flex sm:text-sm">
                   Admin
                 </Link>
               )}
-              <span className="hidden text-sm text-[var(--text-muted)] sm:inline">@{user.username}</span>
-              <button type="button" onClick={() => logout()} className="lunea-btn lunea-btn-primary px-4 py-2 text-sm">
+              <span className="hidden text-xs text-[var(--text-muted)] sm:inline sm:text-sm">@{user.username}</span>
+              <button type="button" onClick={() => logout()} className="lunea-btn lunea-btn-primary px-3 py-2 text-xs sm:px-4 sm:text-sm">
                 Déconnexion
               </button>
             </>
           ) : (
             <>
-              <Link href="/connexion" className="lunea-btn lunea-btn-ghost hidden px-4 py-2 text-sm sm:inline-flex">
+              <Link href="/connexion" className="lunea-btn lunea-btn-ghost hidden px-3 py-2 text-xs sm:inline-flex sm:text-sm">
                 Connexion
               </Link>
-              <Link href="/inscription" className="lunea-btn lunea-btn-primary px-4 py-2 text-sm">
+              <Link href="/inscription" className="lunea-btn lunea-btn-primary px-3 py-2 text-xs sm:px-4 sm:text-sm">
                 Inscription
               </Link>
             </>
@@ -100,7 +100,7 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] md:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] md:hidden sm:h-10 sm:w-10"
             onClick={() => setOpen((v) => !v)}
             aria-label="Menu"
           >

@@ -8,7 +8,7 @@ export function TrackCard({ track }: { track: TrackView }) {
   const { play } = usePlayer();
 
   return (
-    <article className="group w-36 shrink-0 animate-fade-up sm:w-40">
+    <article className="group w-32 shrink-0 animate-fade-up sm:w-36 md:w-40">
       <button
         type="button"
         onClick={() => play(track)}
@@ -20,17 +20,17 @@ export function TrackCard({ track }: { track: TrackView }) {
           className="aspect-square w-full object-cover transition duration-300 group-hover:scale-105"
         />
         <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
-          <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--bg)] text-lg">
+          <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--bg)] text-base sm:h-12 sm:w-12 sm:text-lg">
             ▶
           </span>
         </span>
       </button>
-      <Link href={`/chanson/${track.id}`} className="block truncate text-sm font-semibold hover:text-[var(--accent)]">
+      <Link href={`/chanson/${track.id}`} className="block truncate text-xs font-semibold hover:text-[var(--accent)] sm:text-sm">
         {track.title}
       </Link>
       <Link
         href={`/artiste/${track.artistId}`}
-        className="block truncate text-xs text-[var(--text-muted)] hover:text-[var(--accent)]"
+        className="block truncate text-[10px] text-[var(--text-muted)] hover:text-[var(--accent)] sm:text-xs"
       >
         {track.artistName}
       </Link>

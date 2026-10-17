@@ -33,21 +33,21 @@ export default async function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg)] via-[var(--bg)]/90 to-[var(--bg)]/40" />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg)] via-transparent to-[var(--bg)]/50" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-col justify-end px-4 pb-14 pt-20 md:min-h-[440px] md:px-6 md:pb-16 md:pt-28">
+        <div className="relative mx-auto flex max-w-7xl flex-col justify-end px-4 pb-12 pt-16 md:min-h-[440px] md:px-6 md:pb-16 md:pt-28">
           <div className="animate-fade-up mb-4">
-            <LuneaLogo href="" size="hero" className="max-w-[280px] drop-shadow-lg sm:max-w-[340px]" />
+            <LuneaLogo href="" size="hero" className="max-w-[200px] drop-shadow-lg sm:max-w-[280px] md:max-w-[340px]" />
           </div>
-          <h1 className="animate-fade-up animate-delay-1 max-w-2xl font-display text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl md:text-4xl">
+          <h1 className="animate-fade-up animate-delay-1 max-w-2xl font-display text-xl font-bold leading-tight tracking-tight text-white sm:text-2xl md:text-3xl lg:text-4xl">
             Découvrez, écoutez et téléchargez gratuitement votre musique préférée
           </h1>
-          <form action="/recherche" className="animate-fade-up animate-delay-2 mt-8 max-w-xl">
-            <div className="flex gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-elevated)]/80 p-2 backdrop-blur">
+          <form action="/recherche" className="animate-fade-up animate-delay-2 mt-6 max-w-xl">
+            <div className="flex flex-col gap-2 rounded-2xl border border-[var(--border)] bg-[var(--bg-elevated)]/80 p-2 backdrop-blur sm:flex-row sm:gap-2 sm:p-2">
               <input
                 name="q"
                 placeholder="Rechercher une chanson ou un artiste"
-                className="lunea-input flex-1 border-0 bg-transparent py-3"
+                className="lunea-input flex-1 border-0 bg-transparent py-3 sm:py-3"
               />
-              <button type="submit" className="lunea-btn lunea-btn-primary shrink-0 px-5">
+              <button type="submit" className="lunea-btn lunea-btn-primary shrink-0 px-5 py-3 sm:py-0">
                 Rechercher
               </button>
             </div>
@@ -70,10 +70,10 @@ export default async function HomePage() {
           </div>
         </section>
 
-        <div className="grid gap-10 lg:grid-cols-[1fr_280px]">
-          <div className="space-y-10">
+        <div className="grid gap-8 lg:grid-cols-[1fr_280px] xl:gap-10">
+          <div className="space-y-8 lg:space-y-10">
             <section>
-              <h2 className="mb-4 font-display text-2xl font-bold">Nouvelles chansons</h2>
+              <h2 className="mb-4 font-display text-xl font-bold sm:text-2xl">Nouvelles chansons</h2>
               <div className="lunea-card divide-y divide-[var(--border)] p-2">
                 {newest.map((track, i) => (
                   <div key={track.id} className="flex items-center gap-3 px-2 py-3">
@@ -92,7 +92,7 @@ export default async function HomePage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-display text-2xl font-bold">Plus téléchargées</h2>
+              <h2 className="mb-4 font-display text-xl font-bold sm:text-2xl">Plus téléchargées</h2>
               <div className="lunea-card divide-y divide-[var(--border)] p-2">
                 {mostDownloaded.map((track) => (
                   <div key={track.id} className="flex items-center gap-3 px-2 py-3">
@@ -111,9 +111,9 @@ export default async function HomePage() {
             </section>
           </div>
 
-          <aside className="space-y-8">
+          <aside className="space-y-6 lg:space-y-8">
             <section>
-              <h2 className="mb-4 font-display text-xl font-bold">Artistes populaires</h2>
+              <h2 className="mb-4 font-display text-lg font-bold sm:text-xl">Artistes populaires</h2>
               <div className="space-y-3">
                 {artistsWithStats.slice(0, 4).map((artist) => (
                   <Link
@@ -135,7 +135,7 @@ export default async function HomePage() {
             </section>
 
             <section>
-              <h2 className="mb-4 font-display text-xl font-bold">Genres musicaux</h2>
+              <h2 className="mb-4 font-display text-lg font-bold sm:text-xl">Genres musicaux</h2>
               <div className="flex flex-wrap gap-2">
                 {genres.map((g) => (
                   <Link
@@ -149,8 +149,8 @@ export default async function HomePage() {
               </div>
             </section>
 
-            <section className="lunea-card bg-gradient-to-br from-[var(--accent-muted)] to-transparent p-5">
-              <p className="font-display text-lg font-bold">Vous êtes artiste ?</p>
+            <section className="lunea-card bg-gradient-to-br from-[var(--accent-muted)] to-transparent p-4 sm:p-5">
+              <p className="font-display text-base font-bold sm:text-lg">Vous êtes artiste ?</p>
               <p className="mt-1 text-sm text-[var(--text-muted)]">
                 Publiez gratuitement. Passez Premium. Gagnez grâce à vos écoutes.
               </p>

@@ -19,6 +19,7 @@ export const metadata: Metadata = {
   title: "LUNEA — Découvrez, écoutez et téléchargez",
   description:
     "Plateforme musicale : publiez gratuitement, passez Premium, gagnez grâce à vos écoutes et téléchargements.",
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
