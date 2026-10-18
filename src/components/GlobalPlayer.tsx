@@ -197,9 +197,13 @@ export function GlobalPlayer() {
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-[var(--border)] bg-[var(--bg-elevated)]/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center gap-2 px-3 py-2 sm:gap-3 sm:px-4 sm:py-3 md:gap-4 md:px-6">
-        <img src={track.cover} alt="" className="h-10 w-10 rounded-lg object-cover sm:h-12 sm:w-12" />
+        <Link href={`/chanson/${track.id}`} className="shrink-0">
+          <img src={track.cover} alt="" className="h-10 w-10 rounded-lg object-cover sm:h-12 sm:w-12 hover:opacity-80 transition" />
+        </Link>
         <div className="min-w-0 flex-1 sm:max-w-[200px]">
-          <p className="truncate text-xs font-semibold sm:text-sm">{track.title}</p>
+          <Link href={`/chanson/${track.id}`} className="block truncate text-xs font-semibold hover:text-[var(--accent)] sm:text-sm">
+            {track.title}
+          </Link>
           <Link
             href={`/artiste/${track.artistId}`}
             className="truncate text-[10px] text-[var(--text-muted)] hover:text-[var(--accent)] sm:text-xs"
