@@ -128,6 +128,40 @@ export function SiteHeader() {
               </Link>
             )}
           </nav>
+          <div className="mt-4 flex flex-col gap-2 border-t border-[var(--border)] pt-4">
+            {!loading && user ? (
+              <>
+                <span className="text-sm text-[var(--text-muted)]">@{user.username}</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    logout();
+                    setOpen(false);
+                  }}
+                  className="lunea-btn lunea-btn-primary w-full"
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  href="/connexion"
+                  onClick={() => setOpen(false)}
+                  className="lunea-btn lunea-btn-ghost w-full text-center"
+                >
+                  Connexion
+                </Link>
+                <Link
+                  href="/inscription"
+                  onClick={() => setOpen(false)}
+                  className="lunea-btn lunea-btn-primary w-full"
+                >
+                  Inscription
+                </Link>
+              </>
+            )}
+          </div>
         </div>
       )}
     </header>
