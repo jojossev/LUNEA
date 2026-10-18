@@ -3,6 +3,11 @@ export type TrackView = {
   title: string;
   artistId: string;
   artistName: string;
+  artist?: {
+    id: string;
+    name: string;
+    slug?: string | null;
+  };
   genre: string;
   year: number;
   duration: string;
@@ -12,4 +17,11 @@ export type TrackView = {
   audioUrl?: string | null;
   statusLabel?: string;
   tagsList?: string[];
+  description?: string | null;
+  lyrics?: string | null;
+};
+
+export type TrackWithArtist = TrackView & {
+  description?: string | null;
+  lyrics?: string | null;
 };

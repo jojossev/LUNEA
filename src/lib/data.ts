@@ -35,6 +35,8 @@ export type TrackWithArtist = Track & {
   cover: string;
   tagsList: string[];
   statusLabel: string;
+  description?: string | null;
+  lyrics?: string | null;
 };
 
 function mapTrack(t: Track & { artist: { id: string; name: string; slug: string } }): TrackWithArtist {
@@ -51,6 +53,8 @@ function mapTrack(t: Track & { artist: { id: string; name: string; slug: string 
           : t.status === "HIDDEN"
             ? "Masqué"
             : "Suspendu",
+    description: t.description,
+    lyrics: t.lyrics,
   };
 }
 
@@ -68,7 +72,13 @@ export async function getTrackById(id: string) {
     where: { id },
     include: { artist: { select: { id: true, name: true, slug: true } } },
   });
-  return row ? mapTrack(row) : null;
+  if (!row) return null;
+  const mapped = mapTrack(row);
+  return {
+    ...mapped,
+    description: row.description,
+    lyrics: row.lyrics,
+  };
 }
 
 export async function getArtists() {
