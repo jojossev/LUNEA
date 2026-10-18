@@ -13,6 +13,7 @@ import {
 } from "react";
 import type { TrackView } from "@/lib/types";
 import { LISTEN_VALIDATE_SECONDS } from "@/lib/constants";
+import { getNextRecommendation, saveListen } from "@/lib/recommendations";
 
 type PlayerState = {
   track: TrackView | null;
@@ -24,6 +25,7 @@ type PlayerState = {
   next: () => void;
   prev: () => void;
   download: () => void;
+  smartPlay: () => void;
 };
 
 const PlayerContext = createContext<PlayerState | null>(null);
@@ -108,6 +110,8 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setTrack(t);
     trackRef.current = t;
     setProgress(0);
+    // Sauvegarder l'historique d'écoute
+    saveListen(t);
     if (t.audioUrl) {
       audio.src = t.audioUrl;
       audio.play().catch(() => undefined);
@@ -135,6 +139,17 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     const i = tracks.findIndex((t) => t.id === track.id);
     play(tracks[(i + 1) % tracks.length]);
   }, [track, tracks, play]);
+
+  const smartPlay = useCallback(() => {
+    if (!track || tracks.length === 0) return;
+    const recommendation = getNextRecommendation(tracks, track.id);
+    if (recommendation) {
+      play(recommendation);
+    } else {
+      // Fallback à next si pas de recommandation
+      next();
+    }
+  }, [track, tracks, play, next]);
 
   const prev = useCallback(() => {
     if (!track || tracks.length === 0) return;
@@ -167,15 +182,15 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   }, [track]);
 
   const value = useMemo(
-    () => ({ track, tracks, playing, progress, play, toggle, next, prev, download }),
-    [track, tracks, playing, progress, play, toggle, next, prev, download]
+    () => ({ track, tracks, playing, progress, play, toggle, next, prev, download, smartPlay }),
+    [track, tracks, playing, progress, play, toggle, next, prev, download, smartPlay]
   );
 
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;
 }
 
 export function GlobalPlayer() {
-  const { track, playing, progress, toggle, next, prev, download } = usePlayer();
+  const { track, playing, progress, toggle, next, prev, download, smartPlay } = usePlayer();
 
   if (!track) return null;
 
@@ -208,6 +223,15 @@ export function GlobalPlayer() {
             </button>
             <button type="button" onClick={next} className="text-[var(--text-muted)] hover:text-white text-sm sm:text-base" aria-label="Suivant">
               ⏭
+            </button>
+            <button
+              type="button"
+              onClick={smartPlay}
+              className="hidden text-[var(--accent)] hover:text-[var(--accent-hover)] text-sm sm:inline-flex sm:text-base"
+              aria-label="Lecture intelligente"
+              title="Lecture intelligente"
+            >
+              ✨
             </button>
           </div>
           <div className="hidden w-full max-w-md items-center gap-2 sm:flex">

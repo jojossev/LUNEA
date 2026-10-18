@@ -6,7 +6,8 @@ import { formatNumber } from "@/lib/data";
 import { ReportButton } from "@/components/ReportButton";
 import { DownloadTrackButton } from "@/components/DownloadTrackButton";
 import { usePlayer } from "@/components/GlobalPlayer";
-import type { TrackWithArtist } from "@/lib/types";
+import { getRecommendationsForTrack } from "@/lib/recommendations";
+import type { TrackWithArtist, TrackView } from "@/lib/types";
 
 export default function ChansonClientPage({
   track,
@@ -17,6 +18,7 @@ export default function ChansonClientPage({
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
+  const [recommendations, setRecommendations] = useState<TrackView[]>([]);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   const isCurrentTrack = currentTrack?.id === track.id;
@@ -51,6 +53,18 @@ export default function ChansonClientPage({
       audio.removeEventListener("ended", handleEnded);
     };
   }, []);
+
+  useEffect(() => {
+    // Charger les recommandations
+    fetch("/api/catalog")
+      .then((r) => r.json())
+      .then((data) => {
+        const allTracks = (data.tracks ?? []) as TrackWithArtist[];
+        const recs = getRecommendationsForTrack(track, allTracks, 5);
+        setRecommendations(recs);
+      })
+      .catch(() => undefined);
+  }, [track]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -188,6 +202,38 @@ export default function ChansonClientPage({
             <div className="mt-6 rounded-2xl bg-[var(--bg-elevated)] p-4 sm:p-6">
               <h3 className="font-display text-lg font-bold mb-2 sm:text-xl">Paroles</h3>
               <p className="text-sm text-[var(--text-muted)] whitespace-pre-wrap">{track.lyrics}</p>
+            </div>
+          )}
+
+          {/* Recommandations */}
+          {recommendations.length > 0 && (
+            <div className="mt-6 rounded-2xl bg-[var(--bg-elevated)] p-4 sm:p-6">
+              <h3 className="font-display text-lg font-bold mb-4 sm:text-xl">Vous aimerez aussi</h3>
+              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+                {recommendations.map((rec) => (
+                  <button
+                    key={rec.id}
+                    type="button"
+                    onClick={() => play(rec)}
+                    className="group w-32 shrink-0 sm:w-36"
+                  >
+                    <div className="relative mb-2 block w-full overflow-hidden rounded-2xl">
+                      <img
+                        src={rec.cover}
+                        alt={rec.title}
+                        className="aspect-square w-full object-cover transition duration-300 group-hover:scale-105"
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 transition group-hover:opacity-100">
+                        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--bg)] text-base">
+                          ▶
+                        </span>
+                      </span>
+                    </div>
+                    <p className="truncate text-xs font-semibold hover:text-[var(--accent)] sm:text-sm">{rec.title}</p>
+                    <p className="truncate text-[10px] text-[var(--text-muted)] sm:text-xs">{rec.artistName}</p>
+                  </button>
+                ))}
+              </div>
             </div>
           )}
         </div>
